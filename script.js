@@ -67,6 +67,11 @@
   const navEntry = performance.getEntriesByType?.("navigation")[0];
   const action = navEntry && navEntry.type !== "navigate" ? "get" : "hit"; // don't count reloads
 
+  // Hover tooltips don't exist on touch screens, so tapping shows the same info
+  viewsBox.addEventListener("click", () => {
+    showToast(`Total visits: ${viewCount.textContent}`);
+  });
+
   fetch(`https://countapi.mileshilliard.com/api/v1/${action}/ayegh-hatsauce-introduction-views`)
     .then((res) => res.json())
     .then((data) => {
